@@ -48,10 +48,10 @@ public class AlertRabbit {
     }
 
     private static Properties readFile(String file) {
-         Properties properties = new Properties();
-         try (BufferedReader rd =
-         new BufferedReader(new FileReader(file))) {
-         properties.load(rd);
+        Properties properties = new Properties();
+        try (BufferedReader rd =
+                     new BufferedReader(new FileReader(file))) {
+            properties.load(rd);
         } catch (IOException e) {
             e.printStackTrace();
         }

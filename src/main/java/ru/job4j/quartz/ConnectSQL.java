@@ -1,7 +1,8 @@
 package ru.job4j.quartz;
 
 import java.io.InputStream;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.Properties;
 
 public class ConnectSQL implements AutoCloseable  {
