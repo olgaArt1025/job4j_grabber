@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 public class SqlRuDateTimeParser implements DateTimeParser {
+    final  String yesterday = "вчера";
+    final String today = "сегодня";
     private static final Map<String, Integer> MONTHS = Map.ofEntries(
             Map.entry("янв", 1),
             Map.entry("фев", 2),
@@ -22,9 +24,9 @@ public class SqlRuDateTimeParser implements DateTimeParser {
     @Override
     public LocalDateTime parse(String parse) {
         String[] date = parse.split(" ");
-        if ((date[0]).contains("вчера")) {
+        if ((date[0]).contains(yesterday)) {
             return LocalDateTime.now().minusDays(1);
-        } else if (date[0].contains("сегодня")) {
+        } else if (date[0].contains(today)) {
             return LocalDateTime.now();
         }
         int day = Integer.parseInt(date[0]);
