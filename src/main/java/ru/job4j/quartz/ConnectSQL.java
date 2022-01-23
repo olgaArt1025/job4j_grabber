@@ -7,12 +7,18 @@ import java.util.Properties;
 
 public class ConnectSQL implements AutoCloseable  {
     private Connection cn;
+    private int times;
 
-    public ConnectSQL(Connection cn) {
+    public ConnectSQL(Connection cn, int times) {
         this.cn = cn;
+        this.times = times;
     }
 
     public ConnectSQL() {
+    }
+
+    public int getTimes() {
+        return times;
     }
 
     public void init() {
@@ -21,6 +27,7 @@ public class ConnectSQL implements AutoCloseable  {
             Properties config = new Properties();
             config.load(in);
             Class.forName(config.getProperty("driver"));
+            times = Integer.parseInt(config.getProperty("rabbit.interval"));
             cn = DriverManager.getConnection(
                     config.getProperty("url"),
                     config.getProperty("login"),
