@@ -22,9 +22,9 @@ public class SqlRuDateTimeParser implements DateTimeParser {
     @Override
     public LocalDateTime parse(String parse) {
         String[] date = parse.split(" ");
-        if ("вчера".equals(date[0].replace(",", ""))) {
+        if ((date[0]).contains("вчера")) {
             return LocalDateTime.now().minusDays(1);
-        } else if ("сегодня".equals(date[0].replace(",", ""))) {
+        } else if (date[0].contains("сегодня")) {
             return LocalDateTime.now();
         }
         int day = Integer.parseInt(date[0]);
