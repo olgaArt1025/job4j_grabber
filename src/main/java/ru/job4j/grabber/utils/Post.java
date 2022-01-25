@@ -28,12 +28,6 @@ public class Post {
         this.created = created;
     }
 
-    public Post(String link, String description, LocalDateTime created) {
-        this.link = link;
-        this.description = description;
-        this.created = created;
-    }
-
     public int getId() {
         return id;
     }
