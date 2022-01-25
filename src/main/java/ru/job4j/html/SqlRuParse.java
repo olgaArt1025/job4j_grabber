@@ -1,11 +1,14 @@
 package ru.job4j.html;
 
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import ru.job4j.grabber.utils.Post;
 import ru.job4j.grabber.utils.SqlRuDateTimeParser;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class SqlRuParse {
     public static void main(String[] args) throws Exception {
@@ -21,5 +24,15 @@ public class SqlRuParse {
                 System.out.println(parseDate.parse(td.parent().child(5).text()));
             }
         }
+    }
+
+    public static Post uploadingDetailsPost(String link) throws IOException {
+        Document doc = Jsoup.connect(link).get();
+        String description = doc.select(".msgBody").get(1).text();
+        LocalDateTime created = new SqlRuDateTimeParser()
+                .parse(doc.select(".msgFooter")
+                        .get(0).text().split(" \\[")[0]
+                );
+        return new Post(link, description, created);
     }
 }
