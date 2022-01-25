@@ -26,13 +26,14 @@ public class SqlRuParse {
         }
     }
 
-    public static Post uploadingDetailsPost(String link) throws IOException {
+    public static Post detail(String link) throws IOException {
         Document doc = Jsoup.connect(link).get();
+        String title = doc.title().split("/ Вакансии")[0];
         String description = doc.select(".msgBody").get(1).text();
         LocalDateTime created = new SqlRuDateTimeParser()
                 .parse(doc.select(".msgFooter")
-                        .get(0).text().split(" \\[")[0]
+                        .get(0).text()
                 );
-        return new Post(link, description, created);
+        return new Post(title, link, description, created);
     }
 }
