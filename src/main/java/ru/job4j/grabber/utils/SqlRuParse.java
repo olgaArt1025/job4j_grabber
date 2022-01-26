@@ -34,7 +34,7 @@ public class SqlRuParse implements Parse {
         Document doc = Jsoup.connect(link).get();
         String title = doc.title().split("/ Вакансии")[0];
         String description = doc.select(".msgBody").get(1).text();
-        LocalDateTime created = new SqlRuDateTimeParser()
+        LocalDateTime created = dateTimeParser
                 .parse(doc.select(".msgFooter")
                         .get(0).text()
                 );
