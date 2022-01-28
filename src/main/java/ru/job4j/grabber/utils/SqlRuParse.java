@@ -26,7 +26,10 @@ public class SqlRuParse implements Parse {
                 Elements row = doc.select(".postslisttopic");
                 for (Element td : row) {
                     Element href = td.child(0);
-                    posts.add(detail(href.attr("href")));
+                    String title = doc.title().split("/ Вакансии")[0];
+                    if (title.contains("java") && !title.contains("javascript")) {
+                        posts.add(detail(href.attr("href")));
+                    }
                 }
             }
         } catch (IOException e) {
@@ -37,21 +40,23 @@ public class SqlRuParse implements Parse {
 
     @Override
     public Post detail(String link) {
-        Post post = null;
+        Document doc = null;
         try {
-            Document doc = Jsoup.connect(link).get();
-            String title = doc.title().split("/ Вакансии")[0];
-            if (title.contains("java") && !title.contains("javascript")) {
-                String description = doc.select(".msgBody").get(1).text();
-                LocalDateTime created = dateTimeParser
-                        .parse(doc.select(".msgFooter")
-                                .get(0).text()
-                        );
-                post = new Post(title, link, description, created);
-            }
+            doc = Jsoup.connect(link).get();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return post;
+        String title = doc.title().split("/ Вакансии")[0];
+        String description = doc.select(".msgBody").get(1).text();
+        LocalDateTime created = null;
+        try {
+            created = dateTimeParser
+                    .parse(doc.select(".msgFooter")
+                            .get(0).text()
+                    );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new Post(title, link, description, created);
     }
 }
