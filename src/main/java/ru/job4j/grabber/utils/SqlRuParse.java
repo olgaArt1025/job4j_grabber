@@ -26,7 +26,7 @@ public class SqlRuParse implements Parse {
                 Elements row = doc.select(".postslisttopic");
                 for (Element td : row) {
                     Element href = td.child(0);
-                    String title = doc.title().split("/ Вакансии")[0];
+                    String title = td.child(0).text().toLowerCase();
                     if (title.contains("java") && !title.contains("javascript")) {
                         posts.add(detail(href.attr("href")));
                     }
