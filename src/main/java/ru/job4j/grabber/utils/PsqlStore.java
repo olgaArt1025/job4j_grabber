@@ -37,8 +37,6 @@ public class PsqlStore implements Store, AutoCloseable {
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     post.setId(generatedKeys.getInt(1));
-                } else {
-                    throw new SQLException("Creating user failed, no id obtained.");
                 }
             }
         } catch (Exception e) {
